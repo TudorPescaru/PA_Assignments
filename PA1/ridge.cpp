@@ -3,29 +3,48 @@
 
 using namespace std;
 
-int solve(int N, vector<pair<int, int>>& mountains) {
-    return 0;
-}
+class Task {
+ public:
+    void solve() {
+        read_input();
+        print_output(get_result());
+    }
 
-int main() {
-    ifstream in("ridge.in");
-    ofstream out("ridge.out");
-
+ private:
     int N;
     vector<pair<int, int>> mountains;
 
-    in >> N;
+    void read_input() {
+        ifstream in("ridge.in");
+        in >> N;
 
-    for (int i = 0; i < N; i++) {
-        int Hi, Ci;
-        in >> Hi >> Ci;
-        pair<int, int> mountain = {Hi, Ci};
-        mountains.push_back(mountain);
+        for (int i = 0; i < N; i++) {
+            int Hi, Ci;
+            in >> Hi >> Ci;
+            pair<int, int> mountain = {Hi, Ci};
+            mountains.push_back(mountain);
+        }
+        in.close();
     }
 
-    out << solve(N, mountains);
+    int get_result() {
+        return 0;
+    }
 
-    in.close();
-    out.close();
+    void print_output(int result) {
+        ofstream out("ridge.out");
+        out << result;
+        out.close();
+    }
+};
+
+int main() {
+    auto* task = new (nothrow) Task();
+    if (!task) {
+        cerr << "Error starting task";
+        return -1;
+    }
+    task->solve();
+    delete task;
     return 0;
 }

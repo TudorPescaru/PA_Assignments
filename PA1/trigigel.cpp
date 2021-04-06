@@ -3,21 +3,40 @@
 
 using namespace std;
 
-int solve(int N) {
-    return 0;
-}
+class Task {
+ public:
+    void solve() {
+        read_input();
+        print_output(get_result());
+    }
 
-int main() {
-    ifstream in("trigigel.in");
-    ofstream out("trigigel.out");
-
+ private:
     int N;
 
-    in >> N;
+    void read_input() {
+        ifstream in("trigigel.in");
+        in >> N;
+        in.close();
+    }
 
-    out << solve(N);
+    int get_result() {
+        return 0;
+    }
 
-    in.close();
-    out.close();
+    void print_output(int result) {
+        ofstream out("trigigel.out");
+        out << result;
+        out.close();
+    }
+};
+
+int main() {
+    auto* task = new (nothrow) Task();
+    if (!task) {
+        cerr << "Error starting task";
+        return -1;
+    }
+    task->solve();
+    delete task;
     return 0;
 }
