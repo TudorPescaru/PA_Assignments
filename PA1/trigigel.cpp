@@ -3,6 +3,7 @@
 
 using namespace std;
 
+typedef unsigned long long ull;
 class Task {
  public:
     void solve() {
@@ -11,7 +12,7 @@ class Task {
     }
 
  private:
-    int N;
+    ull N;
 
     void read_input() {
         ifstream in("trigigel.in");
@@ -19,11 +20,11 @@ class Task {
         in.close();
     }
 
-    int get_result() {
+    ull get_result() {
         return 0;
     }
 
-    void print_output(int result) {
+    void print_output(ull result) {
         ofstream out("trigigel.out");
         out << result;
         out.close();

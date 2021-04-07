@@ -2,10 +2,84 @@ Pescaru Tudor-Mihai 321CA 2021
 
 Crypto
 
+Pentru aceasta problema am ales o rezolvare ce se bazeaza pe algoritmul de 
+cautare binara. Cautarea binara va incerca sa gaseasca cel mai mare nivel de 
+upgrade la care poate fi adusa reteaua, avand in vedere costul de upgrade la 
+acel nivel si bugetul disponibil. Intervalul de cautare a fost luat cat mai 
+mare pentru a acoperii limitele impuse asupra parametrilor din input. Astfel, 
+intervalul este [1, ULLONG_MAX = 2^64 - 1]. Pentru fiecare valoare selectata 
+din interval se va calcula costul de upgrade pana la acel nivel. Daca acest 
+cost este egal cu bugetul se va returna nivelul, altfel se va reajusta 
+intervalul pana cand se gaseste o valoare corespunzatoare. Calculul costului 
+este realizat printr-o singura parcurgere a retelei, astfel avand complexitate 
+O(N). Avand in vedere faptul ca intervalul de cautare se duce pana la 
+ULLONG_MAX si complexitatea de O(logN) a cautarii binare, putem spune ca 
+acesta cautare face cel mult log(2^64-1) pasi ~ 64 de pasi. Astfel 
+complexitatea totala a algoritmului va fi O(64N) = O(N) atat din punct de 
+vedere al timpului cat si al spatiului, datorita stocarii input-ului intr-un 
+vector.
+
 Stocks
+
+Pentru aceasta problema am ales o implementare de tip programare dinamica, 
+similara cu cea pentru problema 0-1 Knapsack. In cazul de fata acesta problema 
+va avea o constrangere in plus, determinata de parametrul max_loss. Astfel, 
+matricea DP va fi construita pe 3 dimensiuni. Cazul de baza va fi 0 pentru 
+fiecare dintre cele 3 dimensiuni. In cazul in care pretul unui stock si 
+pierderea pentru acest stock se incadreaza in limitele date se va determina 
+profitul maxim dintre adaugarea si ignorarea stock-ului respectiv. In cazul in 
+care una dintre limite nu se incadreaza, stock-ul va fi ignorat iar maximul va 
+ramane cel anterior. Datorita derivarii acestei rezolvari din cea a problemei 
+Knapsack, complexitatea totala, atat temporala cat si spatiala va fi O(N*B*L), 
+unde N, B si L sunt parametrii din input.
 
 Valley
 
+Primul pas in rezolvarea acestei probleme consta in obtinerea inaltimii minime, 
+a primei pozitii pe care aceasta apare si a ultimei pozitii pe care aceasta 
+apare inca din faza de citire a input-ului. Urmatorul pas va fi verificarea 
+daca minimul se afla pe prima sau pe ultima pozitie din vectorul de inaltimi. 
+In aceste doua cazuri, a doua sau penultima inaltime va fi excavata pana la 
+nivelul minimului pentru a satisface conditiile prefixului sau sufixului. Prin 
+aceasta modificare se va asigura faptul ca prefixul va fi descrescator iar 
+sufixul crescator. Mai apoi se va parcurge lista de la start la prima pozitie 
+a minimului si se vor realiza excavari astfel incat prefixul sa fie 
+descrescator. Intre prima si ultima pozitie a minimului, toate inaltimile vor 
+fi excavate pana la nivelul minimului. Ultima parte a listei va fi parcursa de 
+la final pana la ultima pozitie a minimului si se vor realiza excavari astfel 
+incat sufixul sa fie crescator. Per total trecerea prin aceste trei parti ale 
+vectorului va duce la parcurgerea intregului vector. Astfel, complexitatea 
+temporala va fi O(N), iar cea spatiala va fi tot O(N) datorita stocarii 
+input-ului.
+
 Ridge
 
+Rezolvarea pentru aceasta problema va fi de tip programare dinamica. Aceasta 
+va folosii un vector de stari. Aceste stari vor fi reprezentate de pastrarea 
+unei inaltimi la nivelul ei original sau de excavarea acesteia de un anumit 
+numar de ori. Datorita restrictiei ca doua inaltimi adiacente sa nu fie egale, 
+o inaltime va fi excavata o data sau cel mult de doua ori. Un caz in care o 
+inaltime trebuie excavata de doua ori este, de exemplu, cazul [3, 3, 2]. In 
+acest caz, 3-ul din mijloc ar fi excavat de cel mult 2 ori pentru a satisface 
+cerinta. Astfel, fiecare inaltime poate avea 3 stari: neexcavata, excavata o 
+data sau exacavata de doua ori. Inaltimile care sunt mai mici de 2, nu vor 
+putea fi excavate de doua ori. Vectorul de stari va contine costul minim la 
+fiecare inaltime, pentru fiecare dintre cele 3 stari. Costul pentru starea de 
+dubla excavare, pentru inaltimile ce nu pot fi excavate de doua ori va fi 
+infinit. Initial, va fi setat costul pentru fiecare stare pentru prima 
+inaltime. Pentru restul inaltimilor, acestea vor fi comparate cu inaltimea 
+precedenta lor pentru a determina costul minim in fiecare stare. Costul va fi 
+updatat doar pentru cazurile in care inaltimile in fiecare dintre cele 3 stari 
+difera de inaltimea precedenta in aceeasi stare. In total vor fi 9 cazuri in 
+care costul se poate modifica. Modificarea costului va avea in vedere 
+minimizarea acestuia. Astfel, costul final va fi minimul dintre costul pe 
+cele 3 stari ale ultimei inaltimi. La fiecare pas costul pe o stare va fi 
+minimul dintre costurile inaltimilor precedente in starile in care acestea 
+sunt diferite de inaltimea din starea curenta la care se adauga, eventual 
+costul unei excavari sau costul a doua excavari in cazul starile lor 
+respective. Per total, complexitatea spatiala si cea temporala este O(N), 
+determinata de o singura parcurgere prin vectorul de inaltimi si de stocarea 
+atat a input-ului cat si a vectorului de stari.
+
 Trigigel
+
