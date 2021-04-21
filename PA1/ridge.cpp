@@ -69,23 +69,10 @@ class Task {
                         dp[i][0] = min(dp[i - 1][0], dp[i - 1][1]);
                     }
                 } else {
-                    // Compare unexcavated curr with prev excavated twice
-                    if (c0 != p2) {
-                        dp[i][0] = min(dp[i - 1][0], dp[i - 1][2]);
-                    } else {
-                        dp[i][0] = dp[i - 1][0];
-                    }
+                    dp[i][0] = min(dp[i - 1][0], dp[i - 1][2]);
                 }
             } else {
-                // Compare unexcavated curr with prev excavated once
-                if (c0 != p1) {
-                    // Compare unexcavated curr with prev excavated twice
-                    if (c0 != p2) {
-                        dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]);
-                    } else {
-                        dp[i][0] = dp[i - 1][1];
-                    }
-                }
+                dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]);
             }
             // Update state for excavating curr once
             // Compare curr excavated once with unexcavated prev
@@ -102,25 +89,12 @@ class Task {
                                     + mountains[i].second;
                     }
                 } else {
-                    // Compare curr excavated once with prev excavated twice
-                    if (c1 != p2) {
-                        dp[i][1] = min(dp[i - 1][0], dp[i - 1][2])
-                                    + mountains[i].second;
-                    } else {
-                        dp[i][1] = dp[i - 1][0] + mountains[i].second;
-                    }
+                    dp[i][1] = min(dp[i - 1][0], dp[i - 1][2])
+                                + mountains[i].second;
                 }
             } else {
-                // Compare curr excavated once with prev excavated once
-                if (c1 != p1) {
-                    // Compare curr excavated once with prev excavated twice
-                    if (c1 != p2) {
-                        dp[i][1] = min(dp[i - 1][1], dp[i - 1][2])
-                                    + mountains[i].second;
-                    } else {
-                        dp[i][1] = dp[i - 1][1] + mountains[i].second;
-                    }
-                }
+                dp[i][1] = min(dp[i - 1][1], dp[i - 1][2])
+                            + mountains[i].second;
             }
             // Check if curr can be excavated twice
             if (c2 >= 0) {
@@ -139,25 +113,12 @@ class Task {
                                         + 2 * mountains[i].second;
                         }
                     } else {
-                        // Compare curr excavated once with prev excavated twice
-                        if (c2 != p2) {
-                            dp[i][2] = min(dp[i - 1][0], dp[i - 1][2])
-                                        + 2 * mountains[i].second;
-                        } else {
-                            dp[i][2] = dp[i - 1][0] + 2 * mountains[i].second;
-                        }
+                        dp[i][2] = min(dp[i - 1][0], dp[i - 1][2])
+                                    + 2 * mountains[i].second;
                     }
                 } else {
-                    // Compare curr excavated twice with prev excavated once
-                    if (c2 != p1) {
-                        // Compare curr excavated once with prev excavated twice
-                        if (c2 != p2) {
-                            dp[i][2] = min(dp[i - 1][1], dp[i - 1][2])
-                                        + 2 * mountains[i].second;
-                        } else {
-                            dp[i][2] = dp[i - 1][1] + 2 * mountains[i].second;
-                        }
-                    }
+                    dp[i][2] = min(dp[i - 1][1], dp[i - 1][2])
+                                + 2 * mountains[i].second;
                 }
             } else {
                 // Set double excavation state as impossible
