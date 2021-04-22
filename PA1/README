@@ -83,13 +83,22 @@ atat a input-ului cat si a vectorului de stari.
 
 Trigigel
 
-Am calculat manual toate valorile pentru N de la 0 pana la 11 pentru a 
-determina recurenta dintre rezultate. Astfel am determinat o recurenta dp[i] = 
-dp[i - 1] + dp[i - 3] + 3. Utilizand aceasta recurenta am aplicat tehnica 
-exponentierii logaritmice pe matrici pentru a putea acoperii toate testele, 
-inclusiv cele cu N pana la valori foarte mari. In cazul meu starea initiala, 
-S3 = (3, 1, 3, 6) iar matricea de coeficienti constanti a fost determinata 
-in functie de starea initiala si de dependinta elementului dp[i] de dp[i - 1] si
-dp[i - 3]. Astfel se obtine o complexitate temorala de O(KMAX^3*logN) si o 
-complexitate spatiala O(KMAX^3), unde KMAX = 4. Pentru simplitate am utilizat 
-functiile multiply_matrix si power_matrix definite in laboratorul 4.
+Am calculat manual toate valorile pentru N de la 0 pana la 8 pentru a 
+determina recurenta dintre rezultate. Am ales sa utilizez, in calculul lui 
+dp[i], pe dp[i - 1], dp[i - 2], dp[i - 3] si dp[i - 4]. Pentru asta am ales 
+drept cazuri de baza valorile de la dp[1] pana la dp[4]. Mai apoi am creeat un 
+sistem de 4 ecuatii cu 4 necunoscute, utilizand valorile pentru dp[5], dp[6], 
+dp[7] si dp[8] si valorile precedente necesare. Astfel am determinat 
+coeficientii ce au dus la determinarea urmatoarei recurente: dp[i] = 2dp[i - 1]
+- dp[i - 2] + dp[i - 3] - dp[i - 4]. Avand in vedere aceasta relatie de 
+recurenta, am urmat teoria din laboratorul 4 si am aplicat metoda exponentierii 
+logaritmice de matrice. Am ales KMAX = 4 si starea initiala S4 = (1, 3, 6, 10). 
+Matricea de coeficienti a fost mai apoi construita conform exemplului, 
+utilizand coeficientii determinati anterior. Am utilizat functiile de 
+multiply_matrix si power_matrix prezentate in laborator, modificand doar 
+operatia "sum % MOD" din cadrul functiei multiply_matrix pentru a permite 
+lucrul cu numere negative, acest fapt fiind necesar datorita prezentei a doi 
+coeficienti negativi in cadrul recurentei. Matricea C a fost ridicata la 
+puterea N - KMAX, iar apoi valoarea finala a fost determinata prin inmultirea 
+matricei cu starea initiala. Astfel am obtinut o complextiate temporala de 
+O(KMAX^3 * logN) si o complexitate spatiala de O(KMAX^3), unde KMAX = 4.

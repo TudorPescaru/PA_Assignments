@@ -3,7 +3,7 @@
 
 using namespace std;
 
-typedef unsigned long long ull;
+typedef long long ll;
 
 #define MOD 1000000007
 #define KMAX 4
@@ -16,7 +16,7 @@ class Task {
     }
 
  private:
-    ull N;
+    ll N;
 
     void read_input() {
         ifstream in("trigigel.in");
@@ -24,27 +24,30 @@ class Task {
         in.close();
     }
 
-    void multiply_matrix(ull A[KMAX][KMAX], ull B[KMAX][KMAX],
-                        ull C[KMAX][KMAX]) {
-        ull tmp[KMAX][KMAX];
+    // Multiply two matrices
+    void multiply_matrix(ll A[KMAX][KMAX], ll B[KMAX][KMAX],
+                        ll C[KMAX][KMAX]) {
+        ll tmp[KMAX][KMAX];
 
         for (int i = 0; i < KMAX; ++i) {
             for (int j = 0; j < KMAX; ++j) {
-                ull sum = 0;
+                ll sum = 0;
 
-                for (ull k = 0; k < KMAX; ++k) {
+                for (int k = 0; k < KMAX; ++k) {
                     sum += 1LL * A[i][k] * B[k][j];
                 }
 
-                tmp[i][j] = sum % MOD;
+                // Perform modulo correctly for negative numbers
+                tmp[i][j] = (-((-sum) % MOD) + MOD) % MOD;
             }
         }
 
         memcpy(C, tmp, sizeof(tmp));
     }
 
-    void power_matrix(ull C[KMAX][KMAX], ull p, ull R[KMAX][KMAX]) {
-        ull tmp[KMAX][KMAX];
+    // Raise a matrix to a given power
+    void power_matrix(ll C[KMAX][KMAX], ll p, ll R[KMAX][KMAX]) {
+        ll tmp[KMAX][KMAX];
         for (int i = 0; i < KMAX; ++i) {
             for (int j = 0; j < KMAX; ++j) {
                 tmp[i][j] = (i == j) ? 1 : 0;
@@ -64,7 +67,8 @@ class Task {
         multiply_matrix(C, tmp, R);
     }
 
-    ull get_result() {
+    ll get_result() {
+        // Return values for base cases
         if (N == 1) {
             return 1;
         }
@@ -74,16 +78,22 @@ class Task {
         if (N == 3) {
             return 6;
         }
-        ull C[KMAX][KMAX] = {{1, 0, 0, 1},
-                             {0, 0, 0, 1},
-                             {0, 1, 0, 0},
-                             {0, 0, 1, 1}};
-        power_matrix(C, N - 3, C);
-        ull sol = 3 * C[0][3] + 1 * C[1][3] + 3 * C[2][3] + 6 * C[3][3];
+        if (N == 4) {
+            return 10;
+        }
+        // Declare initial constant matrix
+        ll C[KMAX][KMAX] = {{0, 0, 0, -1},
+                            {1, 0, 0, 1},
+                            {0, 1, 0, -1},
+                            {0, 0, 1, 2}};
+        // Raise matrix to power N - KMAX
+        power_matrix(C, N - 4, C);
+        // Compute final element
+        ll sol = 1 * C[0][3] + 3 * C[1][3] + 6 * C[2][3] + 10 * C[3][3];
         return sol % MOD;
     }
 
-    void print_output(ull result) {
+    void print_output(ll result) {
         ofstream out("trigigel.out");
         out << result;
         out.close();
